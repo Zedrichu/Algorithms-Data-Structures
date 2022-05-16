@@ -29,18 +29,43 @@ class Graph:
             print("Topological sorting failed. Not an directed acyclic graph!")
         return topOrder
 
-    def shortestPath(self, start):
+    def shortestPath(self, start): # O(N+M)
+        # Compute the topological order used for processing
         order = self.topologicalSort()
-        print(order)
+        print("Sequence of vertices in topple:"+str(order))
+        # Initialize path distance estimates for every vertex
         paths = [float('inf') for _ in range(self.V)]
         paths[start] = 0
         gor = False
         for v in order:
+            # Wait for the start node to occur in topological sort
             if v == start:
                 gor = True
             if gor:
+                # Relax all the incident edges
                 for u, w in self.adjList[v]:
+                    # Distance estimate can be decreased
                     if paths[u] > paths[v] + w:
+                        paths[u] = paths[v] + w
+        return paths
+
+    def longestPath(self, start): # O(N+M)
+        # Compute the topological order used for processing
+        order = self.topologicalSort()
+        print("Sequence of vertices in topple:"+str(order))
+        # Initialize path distance estimates for every vertex
+        paths = [float('-inf') for _ in range(self.V)]
+        paths[start] = 0
+        gor = False
+        for v in order:
+            # Wait for the start node to occur in topological sort
+            if v == start:
+                gor = True
+            if gor:
+                # Stress all the incident edges
+                for u, w in self.adjList[v]:
+                    # Distance estimate can be increased
+                    if paths[u] < paths[v] + w:
                         paths[u] = paths[v] + w
         return paths
 
@@ -55,5 +80,6 @@ for _ in range(M):
     x, y, w = map(int, input().split())
     graph.addEdge(x, y, w)
 
-print(graph.adjList)
-print(graph.shortestPath(1))
+print("Graph edges:"+str(graph.adjList))
+print("Shortest path for topple sequence:"+str(graph.shortestPath(1)))
+print("Longest path for topple sequence:"+str(graph.longestPath(1)))
