@@ -7,28 +7,45 @@ class Node:
 
 class Stack:
     def __init__(self):
-        self.head = None
+        self.top = None
 
     def isEmpty(self):
-        return self.head == None
+        return self.top == None
     
+    def peek(self):
+        return self.top
+    
+    def contains(self, value):
+        iterator = self.top
+        while (iterator.next and iterator.value != value):
+            iterator = iterator.next
+        return iterator.value == value
+        
     def push(self,X):
         if self.isEmpty():
-            self.head = X
+            self.top = X
         else:
-            X.next = self.head
-            self.head = X
+            X.next = self.top
+            self.top = X
     
     def pop(self):
         if self.isEmpty():
             return None
         else:
-            X = self.head
-            self.head = self.head.next
+            X = self.top
+            self.top = self.top.next
             print(X.value)
             return X
 
 S = Stack()    
+
+# <| Test Block |>
+# S.push(Node(2))
+# S.push(Node(3))
+# print(S.contains(1))
+# print(S.peek().value)
+
+# <| Problem Block |>
 N = int(input())
 
 for i in range(N):
