@@ -44,6 +44,18 @@ class LinkedList:
         
         return count
     
+    def nodeAtIndex(self, index):
+        if index == 0:
+            return self.head
+        else:
+            current = self.head
+            position = 0
+            
+            while (position < index):
+                current = current.next
+                position += 1
+            return current 
+    
     def add(self, data):
         """
         Adds new node of data to the head of the list (prepending). O(1) time
